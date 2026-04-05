@@ -6,7 +6,7 @@ Shared ESLint and Prettier configuration for TypeScript, Vue, and Nuxt projects.
 
 ```bash
 # From GitHub
-npm i -D github:cjohnson/chris-eslint-config
+npm i -D github:rebz/chris-eslint-config
 
 # Peer dependencies
 npm i -D eslint prettier typescript

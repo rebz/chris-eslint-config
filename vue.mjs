@@ -50,6 +50,23 @@ export default [
 
       // Catch unused template refs
       'vue/no-unused-refs': 'warn',
+
+      // Match project-preferred multiline attribute formatting in templates.
+      'vue/max-attributes-per-line': [
+        'error',
+        {
+          singleline: 1,
+          multiline: 1,
+        },
+      ],
+      'vue/html-closing-bracket-newline': [
+        'error',
+        {
+          singleline: 'never',
+          multiline: 'always',
+        },
+      ],
+      
     },
   },
 ];
