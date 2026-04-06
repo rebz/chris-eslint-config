@@ -1,11 +1,14 @@
-import base from './base.mjs';
-import vue from './vue.mjs';
+import eslint from '@eslint/js';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import { baseRules } from './base.mjs';
+import { vueRules } from './vue.mjs';
 
 /**
  * All-in-one config for Nuxt projects.
  *
- * Combines base (TypeScript) + Vue rules + Nuxt-specific overrides.
- * Designed to pair with @nuxt/eslint module which handles auto-import globals.
+ * Uses rules-only imports from base.mjs and vue.mjs to avoid duplicate
+ * plugin registrations — withNuxt from @nuxt/eslint already registers
+ * eslint-plugin-vue, @typescript-eslint, and vue-eslint-parser.
  *
  * Usage:
  *   import withNuxt from './.nuxt/eslint.config.mjs';
@@ -15,23 +18,23 @@ import vue from './vue.mjs';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  ...base,
-  ...vue,
+  // Core ESLint recommended rules (no plugin — safe to include)
+  eslint.configs.recommended,
+  // Prettier plugin + eslint-config-prettier (Nuxt does not provide this)
+  eslintPluginPrettierRecommended,
+  // Custom rules from base (TS/JS conventions, Prettier config override)
+  baseRules,
+  // Custom Vue template rules (formatting, naming, etc.)
+  vueRules,
   {
     rules: {
-      // Nuxt auto-imports Vue composables (ref, computed, watch, etc.)
-      // and Nuxt composables (useFetch, useRoute, etc.), so the
-      // @nuxt/eslint module handles no-undef for those. These rules
-      // complement that setup.
-
-      // In Nuxt, components are auto-imported — no unused import warnings
-      // for components that appear only in templates.
+      // Nuxt override: add ignoreRestSiblings for auto-imported composables
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
-          destructuredArrayPattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
           ignoreRestSiblings: true,
         },
       ],
