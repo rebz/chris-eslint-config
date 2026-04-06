@@ -60,26 +60,17 @@ export const vueRules = {
     // Catch unused template refs
     'vue/no-unused-refs': 'warn',
 
-    // Match project-preferred multiline attribute formatting in templates.
-    'vue/max-attributes-per-line': [
-      'error',
-      {
-        singleline: 2,
-        multiline: { max: 1 },
-      },
-    ],
-    'vue/first-attribute-linebreak': [
-      'error',
-      {
-        singleline: 'beside',
-        multiline: 'beside',
-      },
-    ],
+    // Attribute placement is left to developer judgment / line width.
+    // Disable the recommended defaults that force one-per-line.
+    'vue/max-attributes-per-line': 'off',
+    'vue/first-attribute-linebreak': 'off',
+
+    // Closing bracket stays on the same line as the last attribute value.
     'vue/html-closing-bracket-newline': [
       'error',
       {
         singleline: 'never',
-        multiline: 'always',
+        multiline: 'never',
       },
     ],
     'vue/html-indent': [
@@ -89,7 +80,7 @@ export const vueRules = {
         attribute: 1,
         baseIndent: 1,
         closeBracket: 0,
-        alignAttributesVertically: true,
+        alignAttributesVertically: false,
       },
     ],
   },
